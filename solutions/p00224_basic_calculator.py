@@ -57,20 +57,31 @@ def parse(s: str):
 
 class Solution:
     def calculate(self, s: str) -> int:
-        parsed = parse(s)
+        sum = 0
+        last_sign = 1
+        signs = [1]
+        digits = ""
 
-        def sum(items):
-            if not isinstance(items, list):
-                return items
-            result = 0
-            sig = items[0]
-            for item in items[1:]:
-                result += sig * sum(item)
-            return result
+        for char in s + "#":
+            if char.isnumeric():
+                digits += char
+            else:
+                if len(digits) > 0:
+                    sum += last_sign * signs[-1] * int(digits)
+                    digits = ""
+                if char == "+":
+                    last_sign = 1
+                elif char == "-":
+                    last_sign = -1
+                elif char == "(":
+                    signs.append(last_sign * signs[-1])
+                    last_sign = 1
+                elif char == ")":
+                    signs.pop()
 
-        return sum(parsed)
+        return sum
 
 
-ss = ""
+ss = "1 - (10 + (20 + 30))+5+(6-3)"
 s = Solution()
 print(s.calculate(ss))
