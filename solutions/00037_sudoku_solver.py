@@ -9,35 +9,6 @@ class Solution:
 
         board: List[List[int]] = list(map(lambda row: list(map(lambda item: 0 if item == "." else int(item), row)), s_board))
 
-        def can_add_to_row(i, value):
-            nonlocal board
-            for j in range(9):
-                if board[i][j] == value:
-                    return False
-            return True
-
-        def can_add_to_col(j, value):
-            nonlocal board
-            for i in range(9):
-                if board[i][j] == value:
-                    return False
-            return True
-
-        def can_add_to_box(i0, j0, value):
-            nonlocal board
-            delta_i = 3 * i0
-            delta_j = 3 * j0
-            for i in range(3):
-                for j in range(3):
-                    if board[delta_i + i][delta_j + j] == value:
-                        return False
-            return True
-
-        def can_add(i, j, value):
-            i0 = i // 3
-            j0 = j // 3
-            return can_add_to_row(i, value) and can_add_to_col(j, value) and can_add_to_box(i0, j0, value)
-
         def possibilities_for_row(i) -> set:
             nonlocal board
             result = {1, 2, 3, 4, 5, 6, 7, 8, 9}
